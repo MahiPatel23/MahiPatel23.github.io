@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mahi Patel — Data Scientist & Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0d0f1a;
+  --card:#161929;
+  --card2:#1a1d2e;
+  --card3:#1e2235;
+  --border:#252840;
+  --border2:#2e3352;
+  --text:#e8eaf8;
+  --muted:#6b7199;
+  --muted2:#9da3c8;
+  --mint:#4fffb0;
+  --mint2:#2de88a;
+  --purple:#a78bfa;
+  --purple2:#c4b5fd;
+  --blue:#60a5fa;
+  --mono:'JetBrains Mono',monospace;
+  --serif:'Playfair Display',serif;
+  --sans:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--sans);font-size:15px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  /* top-right green glow like Lovable */
+  background-image:radial-gradient(ellipse 60% 50% at 85% 0%,rgba(34,197,94,0.12) 0%,transparent 60%),
+                   radial-gradient(ellipse 40% 60% at 100% 30%,rgba(16,185,129,0.08) 0%,transparent 50%);
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;height:60px;
+  background:rgba(13,15,26,0.8);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.nav-brand{display:flex;align-items:center;gap:12px;}
+.nav-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--mint),var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:11px;font-weight:700;color:#0d0f1a;
+}
+.nav-info{display:flex;flex-direction:column;gap:0;}
+.nav-name{font-size:13px;font-weight:500;line-height:1.2;}
+.nav-sub{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.1em;}
+.nav-pills{
+  display:flex;align-items:center;gap:2px;
+  background:rgba(255,255,255,0.05);border:1px solid var(--border);
+  border-radius:100px;padding:4px;
+}
+.nav-pill{
+  font-family:var(--mono);font-size:10px;color:var(--muted2);
+  text-decoration:none;padding:6px 16px;border-radius:100px;
+  transition:all 0.18s;letter-spacing:0.04em;
+}
+.nav-pill:hover,.nav-pill.active{background:rgba(255,255,255,0.1);color:var(--text);}
+.nav-clock{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.06em;}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;padding:80px 2.5rem 2rem;
+  display:grid;grid-template-columns:1fr 380px;
+  grid-template-rows:auto auto;gap:2rem;
+  max-width:1400px;margin:0 auto;
+}
+.hero-main{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:2rem 0;grid-column:1;grid-row:1;
+}
+.hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem;}
+.hbadge{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.08em;
+  padding:5px 14px;border-radius:100px;
+  border:1px solid var(--border2);color:var(--muted2);
+  display:flex;align-items:center;gap:6px;
+}
+.hbadge-dot{width:5px;height:5px;border-radius:50%;background:var(--mint);}
+
+.hero-h1{
+  font-family:var(--serif);
+  font-size:clamp(3.5rem,7vw,6.5rem);
+  font-weight:800;line-height:1.0;
+  letter-spacing:-0.02em;
+  margin-bottom:1.5rem;
+}
+.h1-mint{color:var(--mint);font-style:italic;}
+.h1-purple{color:var(--purple);font-style:italic;}
+.h1-white{color:var(--text);}
+
+.hero-sub{
+  font-size:1rem;color:var(--muted2);max-width:540px;
+  line-height:1.85;margin-bottom:2rem;font-weight:300;
+}
+.hero-btns{display:flex;gap:0.75rem;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11px;letter-spacing:0.05em;
+  padding:11px 24px;border-radius:100px;text-decoration:none;
+  transition:all 0.18s;border:1px solid var(--border2);
+  color:var(--muted2);background:transparent;
+}
+.btn:hover{background:rgba(255,255,255,0.06);color:var(--text);}
+.btn-mint{
+  background:var(--mint);color:#061408;border-color:var(--mint);
+  font-weight:700;
+}
+.btn-mint:hover{background:var(--mint2);border-color:var(--mint2);color:#061408;}
+
+/* MODEL PERF CARD */
+.model-card{
+  grid-column:2;grid-row:1;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:1.5rem;
+  display:flex;flex-direction:column;
+  align-self:center;
+}
+.mc-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.25rem;
+}
+.mc-title{font-family:var(--mono);font-size:10px;color:var(--muted2);letter-spacing:0.1em;}
+.mc-live{font-family:var(--mono);font-size:9px;color:var(--mint);display:flex;align-items:center;gap:5px;}
+.mc-dot{width:5px;height:5px;border-radius:50%;background:var(--mint);animation:pulse 1.4s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.2;}}
+
+/* line chart canvas */
+#mc-chart{width:100%;height:140px;display:block;margin-bottom:1rem;}
+.mc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.mcs-item{display:flex;flex-direction:column;gap:2px;}
+.mcs-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.08em;}
+.mcs-val{font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--text);}
+
+/* STAT CARDS ROW */
+.stat-row{
+  grid-column:1/-1;grid-row:2;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:1.5rem;
+  display:flex;flex-direction:column;gap:0.5rem;
+}
+.sc-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+.sc-val{font-family:var(--mono);font-size:2rem;font-weight:700;color:var(--mint);line-height:1.1;}
+.sc-sub{font-size:11px;color:var(--muted);font-family:var(--mono);}
+.sc-list{display:flex;flex-direction:column;gap:4px;margin-top:4px;}
+.sc-item{font-size:12px;color:var(--muted2);display:flex;align-items:flex-start;gap:6px;}
+.sc-bullet{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.sc-bullet-mint{background:var(--mint);}
+.sc-bullet-purple{background:var(--purple);}
+.sc-bullet-gray{background:var(--muted);}
+
+/* globe placeholder */
+.globe-wrap{flex:1;display:flex;align-items:center;justify-content:center;}
+#globe-canvas{display:block;}
+.globe-sub{font-family:var(--mono);font-size:9px;color:var(--mint);letter-spacing:0.08em;text-align:center;margin-top:0.5rem;}
+
+/* ── TICKER ── */
+.ticker-wrap{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:var(--card);overflow:hidden;height:44px;
+  display:flex;align-items:center;
+}
+.ticker-inner{display:flex;white-space:nowrap;animation:tick 30s linear infinite;}
+@keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.tick-item{
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  color:var(--muted2);letter-spacing:0.12em;
+  padding:0 1.5rem;display:flex;align-items:center;gap:12px;
+}
+.tick-sep{color:var(--mint);font-size:8px;}
+
+/* ── SECTIONS ── */
+.section{padding:5rem 2.5rem;max-width:1400px;margin:0 auto;}
+.sec-eyebrow{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:1.25rem;}
+.sec-h2{
+  font-family:var(--serif);font-size:clamp(2.5rem,5vw,4.5rem);
+  font-weight:800;line-height:1.05;letter-spacing:-0.02em;margin-bottom:0;
+}
+.sec-h2 .mint{color:var(--mint);font-style:italic;}
+.sec-h2 .purple{color:var(--purple);font-style:italic;}
+
+/* ── WORK ── */
+.work-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;}
+.work-count{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.06em;}
+
+/* BIG 2-col row */
+.proj-big{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.proj-small{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+.proj-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:1.75rem;
+  display:flex;flex-direction:column;gap:1rem;
+  transition:border-color 0.2s,background 0.2s,transform 0.2s;
+}
+.proj-card:hover{border-color:var(--border2);background:var(--card2);transform:translateY(-2px);}
+
+.pc-top{display:flex;align-items:center;justify-content:space-between;}
+.pc-num{font-family:var(--mono);font-size:10px;color:var(--mint);letter-spacing:0.08em;}
+.pc-date{font-family:var(--mono);font-size:10px;color:var(--muted);}
+.pc-title{font-family:var(--serif);font-size:1.8rem;font-weight:800;line-height:1.1;letter-spacing:-0.01em;}
+.proj-card.small .pc-title{font-size:1.3rem;}
+.pc-subtitle{font-family:var(--mono);font-size:10px;color:var(--muted2);}
+
+/* mini charts */
+.mini-chart{width:100%;height:90px;display:block;}
+.mini-chart-sm{width:100%;height:70px;display:block;}
+
+.pc-desc{font-size:13px;color:var(--muted2);line-height:1.8;}
+.pc-stats{display:flex;gap:2rem;flex-wrap:wrap;}
+.pcs-item{display:flex;flex-direction:column;gap:2px;}
+.pcs-val{font-family:var(--mono);font-size:1.4rem;font-weight:700;color:var(--mint);}
+.proj-card.small .pcs-val{font-size:1.1rem;}
+.pcs-label{font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+.pc-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.pc-tag{
+  font-size:12px;color:var(--muted2);
+  border:1px solid var(--border2);border-radius:100px;
+  padding:4px 12px;
+}
+.pc-links{display:flex;gap:8px;margin-top:auto;}
+.pc-link{
+  font-family:var(--mono);font-size:10px;color:var(--muted2);
+  text-decoration:none;border:1px solid var(--border);border-radius:100px;
+  padding:5px 14px;transition:all 0.15s;
+}
+.pc-link:hover{color:var(--text);border-color:var(--border2);}
+.pc-link.live{border-color:rgba(79,255,176,0.3);color:var(--mint);}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:1rem;align-items:start;}
+.about-h2{
+  font-family:var(--serif);font-size:clamp(2.5rem,4.5vw,4rem);
+  font-weight:800;line-height:1.05;letter-spacing:-0.02em;margin-bottom:1.5rem;
+}
+.about-h2 .mint{color:var(--mint);font-style:italic;}
+.about-copy{font-size:14px;color:var(--muted2);line-height:1.9;margin-bottom:1rem;}
+.about-right{display:flex;flex-direction:column;gap:1rem;}
+.info-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;
+}
+.ic-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1rem;
+}
+.ic-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;}
+.ic-date{font-family:var(--mono);font-size:10px;color:var(--muted);}
+.ic-title{font-size:15px;font-weight:600;margin-bottom:3px;}
+.ic-org{font-family:var(--mono);font-size:10px;color:var(--mint);margin-bottom:0.75rem;}
+.ic-deg{font-family:var(--mono);font-size:10px;color:var(--mint);margin-bottom:0.75rem;}
+.ic-bullet{font-size:13px;color:var(--muted2);padding:4px 0;display:flex;gap:8px;border-top:1px solid var(--border);}
+.ic-bullet:first-of-type{border-top:none;padding-top:0;}
+.ic-arr{color:var(--mint);flex-shrink:0;font-size:11px;margin-top:2px;}
+.ic-pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:0.75rem;}
+.ic-pill{font-size:11px;color:var(--muted2);border:1px solid var(--border2);border-radius:100px;padding:3px 10px;}
+.ic-gpa{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--mint);}
+
+/* ── STACK ── */
+.stack-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem;
+}
+.sk-card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;
+}
+.sk-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.5rem;
+}
+.sk-title{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;}
+.sk-count{font-family:var(--mono);font-size:12px;color:var(--mint);font-weight:700;}
+.sk-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.sk-item{
+  font-size:13px;color:var(--muted2);
+  padding:8px 0;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+  transition:color 0.15s;
+}
+.sk-item:last-child{border:none;}
+.sk-item:hover{color:var(--text);}
+.sk-chevron{color:var(--mint);font-size:11px;flex-shrink:0;}
+
+.cert-card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:1.5rem;margin-top:1rem;
+}
+.cert-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.cert-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;}
+.cert-count{font-family:var(--mono);font-size:10px;color:var(--muted);}
+.cert-pills{display:flex;flex-wrap:wrap;gap:8px;}
+.cert-pill{font-size:12px;color:var(--muted2);border:1px solid var(--border2);border-radius:100px;padding:6px 16px;transition:all 0.15s;}
+.cert-pill:hover{color:var(--text);border-color:var(--border2);}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:2rem;align-items:start;}
+.contact-h2{
+  font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.8rem);
+  font-weight:800;line-height:1.05;letter-spacing:-0.02em;margin-bottom:1.5rem;
+}
+.contact-h2 .mint{color:var(--mint);font-style:italic;}
+.contact-sub{font-size:14px;color:var(--muted2);line-height:1.9;margin-bottom:2rem;}
+.contact-links{display:flex;flex-direction:column;gap:8px;}
+.c-link{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1rem 1.25rem;text-decoration:none;transition:all 0.15s;
+}
+.c-link:hover{border-color:var(--border2);background:var(--card2);}
+.cl-left{display:flex;flex-direction:column;gap:2px;}
+.cl-label{font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;}
+.cl-val{font-family:var(--mono);font-size:12px;color:var(--text);}
+.cl-arr{color:var(--mint);font-size:14px;}
+.contact-info{display:flex;flex-direction:column;gap:1rem;}
+.ci-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
+.ci-label{font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.5rem;}
+.ci-val{font-size:13px;color:var(--muted2);line-height:1.8;}
+.ci-link{display:block;font-family:var(--mono);font-size:11px;color:var(--mint);text-decoration:none;margin-bottom:4px;}
+.ci-link:hover{text-decoration:underline;}
+
+/* ── FOOTER ── */
+footer{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+  padding:1.5rem 2.5rem;border-top:1px solid var(--border);
+  font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.06em;
+  max-width:1400px;margin:0 auto;
+}
+.ft-status{display:flex;align-items:center;gap:6px;color:var(--mint);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.55s ease,transform 0.55s ease;}
+.reveal.on{opacity:1;transform:none;}
+
+/* CURSOR */
+.cur{display:inline-block;width:2px;height:0.85em;background:var(--mint);vertical-align:middle;margin-left:2px;animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr;}.model-card{display:none;}
+  .stat-row{grid-template-columns:repeat(2,1fr);}
+  .proj-big,.proj-small{grid-template-columns:1fr;}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:3rem;}
+  .stack-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:640px){
+  .section{padding:3rem 1.25rem;}
+  nav{padding:0 1.25rem;}
+  .hero{padding:70px 1.25rem 1.25rem;}
+  .hero-h1{font-size:3rem;}
+  .nav-pills{display:none;}
+  .stat-row{grid-template-columns:1fr 1fr;}
+  .stack-grid{grid-template-columns:1fr;}
+  footer{padding:1.5rem 1.25rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-avatar">mp</div>
+    <div class="nav-info">
+      <span class="nav-name">Mahi Patel</span>
+      <span class="nav-sub">DATA · CHICAGO</span>
+    </div>
+  </div>
+  <div class="nav-pills">
+    <a href="#index" class="nav-pill active">00 index</a>
+    <a href="#work" class="nav-pill">01 work</a>
+    <a href="#about" class="nav-pill">02 about</a>
+    <a href="#stack" class="nav-pill">03 stack</a>
+    <a href="#contact" class="nav-pill">04 contact</a>
+  </div>
+  <span class="nav-clock" id="clock">--:--:-- · CHI</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="index">
+  <div class="hero-main">
+    <div class="hero-badges">
+      <span class="hbadge"><span class="hbadge-dot"></span>OPEN TO OPPORTUNITIES</span>
+      <span class="hbadge">B.S. DATA SCIENCE · UIC</span>
+      <span class="hbadge">GPA 3.46 / 4.0 · 3.73 / 4.0 (Transfer)</span>
+    </div>
+    <h1 class="hero-h1">
+      Turning <span class="h1-mint">messy</span> <span class="h1-purple">data</span><br/>
+      into <span class="h1-purple">decisions</span>
+    </h1>
+    <p class="hero-sub">I'm a data science & business analytics student at UIC building ML systems, geospatial dashboards, and analyses that move past the chart and into the decision.</p>
+    <div class="hero-btns">
+      <a href="#work" class="btn btn-mint">browse_work() →</a>
+      <a href="mailto:mahipatel1623@gmail.com" class="btn">say_hi()</a>
+    </div>
+  </div>
+
+  <!-- MODEL PERF CARD -->
+  <div class="model-card">
+    <div class="mc-header">
+      <span class="mc-title">MODEL_PERF.CSV</span>
+      <span class="mc-live"><span class="mc-dot"></span>live</span>
+    </div>
+    <canvas id="mc-chart"></canvas>
+    <div class="mc-stats">
+      <div class="mcs-item"><span class="mcs-label">train</span><span class="mcs-val">0.91</span></div>
+      <div class="mcs-item"><span class="mcs-label">val</span><span class="mcs-val">0.87</span></div>
+      <div class="mcs-item"><span class="mcs-label">test</span><span class="mcs-val">0.85</span></div>
+    </div>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="stat-row">
+    <div class="stat-card">
+      <span class="sc-label">RECORDS</span>
+      <span class="sc-val">2.1M+</span>
+      <span class="sc-sub">analyzed across projects</span>
+    </div>
+    <div class="stat-card">
+      <span class="sc-label">SHIPPED</span>
+      <span class="sc-val">04</span>
+      <span class="sc-sub">dashboards & models live</span>
+    </div>
+    <div class="stat-card" style="align-items:center;">
+      <span class="sc-label" style="align-self:flex-start;">BASED.IN</span>
+      <div class="globe-wrap">
+        <canvas id="globe-canvas" width="90" height="90"></canvas>
+      </div>
+      <span class="globe-sub">CHI · 41.88°N</span>
+    </div>
+    <div class="stat-card">
+      <span class="sc-label">NOW.SHIPPING</span>
+      <div class="sc-list">
+        <div class="sc-item"><span class="sc-bullet sc-bullet-mint"></span>SepsisWatch v2 — survival curves</div>
+        <div class="sc-item"><span class="sc-bullet sc-bullet-purple"></span>Causal inference reading group</div>
+        <div class="sc-item"><span class="sc-bullet sc-bullet-gray"></span>Open to internships & full-time roles</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner" id="ticker"></div>
+</div>
+
+<!-- WORK -->
+<section class="section reveal" id="work">
+  <div class="work-header">
+    <div>
+      <p class="sec-eyebrow">§ 01 — SELECTED WORK</p>
+      <h2 class="sec-h2">Field notes from<br/>the <span class="mint">dataset</span>.</h2>
+    </div>
+    <span class="work-count">04 entries</span>
+  </div>
+
+  <!-- BIG ROW -->
+  <div class="proj-big">
+    <!-- SepsisWatch -->
+    <div class="proj-card reveal">
+      <div class="pc-top"><span class="pc-num">P-04</span><span class="pc-date">May 2026 — Present</span></div>
+      <h3 class="pc-title">SepsisWatch</h3>
+      <p class="pc-subtitle">Early-warning + cost intelligence</p>
+      <canvas class="mini-chart" id="chart-sepsis"></canvas>
+      <p class="pc-desc">ML-powered sepsis early-warning dashboard trained on 36,111 real ICU records (PhysioNet 2019). Random Forest risk model plus a cost-impact analysis surfacing $32M in preventable costs and a 54% late-detection rate across 1,396 patients.</p>
+      <div class="pc-stats">
+        <div class="pcs-item"><span class="pcs-val" id="cnt1">36,111</span><span class="pcs-label">ICU RECORDS</span></div>
+        <div class="pcs-item"><span class="pcs-val" id="cnt2">$32M</span><span class="pcs-label">PREVENTABLE</span></div>
+        <div class="pcs-item"><span class="pcs-val" id="cnt3">54%</span><span class="pcs-label">LATE DETECT</span></div>
+      </div>
+      <div class="pc-tags">
+        <span class="pc-tag">Python</span><span class="pc-tag">Scikit-learn</span>
+        <span class="pc-tag">Streamlit</span><span class="pc-tag">Plotly</span>
+      </div>
+      <div class="pc-links">
+        <a href="https://sepsis-watch.streamlit.app" target="_blank" class="pc-link live">Live ↗</a>
+        <a href="https://github.com/MahiPatel23/SEPSIS-Watch" target="_blank" class="pc-link">GitHub ↗</a>
+      </div>
+    </div>
+    <!-- 911 -->
+    <div class="proj-card reveal">
+      <div class="pc-top"><span class="pc-num">P-03</span><span class="pc-date">May 2026</span></div>
+      <h3 class="pc-title">Chicago 911 Inequality</h3>
+      <p class="pc-subtitle">Response-time geospatial</p>
+      <canvas class="mini-chart" id="chart-911"></canvas>
+      <p class="pc-desc">Geospatial analysis of 1M+ Chicago crime incidents (2020–2024) exposing block-level disparities in response time. Interactive Folium + Plotly dashboard with neighborhood filters and time-of-day patterns.</p>
+      <div class="pc-stats">
+        <div class="pcs-item"><span class="pcs-val" style="color:var(--purple);">1M+</span><span class="pcs-label">INCIDENTS</span></div>
+        <div class="pcs-item"><span class="pcs-val" style="color:var(--purple);">5</span><span class="pcs-label">HOTSPOTS</span></div>
+        <div class="pcs-item"><span class="pcs-val" style="color:var(--purple);">4yr</span><span class="pcs-label">PANEL</span></div>
+      </div>
+      <div class="pc-tags">
+        <span class="pc-tag">Python</span><span class="pc-tag">Streamlit</span>
+        <span class="pc-tag">Folium</span><span class="pc-tag">Plotly</span>
+      </div>
+      <div class="pc-links">
+        <a href="https://chicago911-tracker.streamlit.app/" target="_blank" class="pc-link live">Live ↗</a>
+        <a href="https://github.com/MahiPatel23" target="_blank" class="pc-link">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SMALL ROW -->
+  <div class="proj-small">
+    <div class="proj-card small reveal">
+      <div class="pc-top"><span class="pc-num">P-02</span><span class="pc-date">Spring 2026</span></div>
+      <h3 class="pc-title">Weather→Power Load</h3>
+      <p class="pc-subtitle">STAT 385 · UIC</p>
+      <canvas class="mini-chart-sm" id="chart-power"></canvas>
+      <p class="pc-desc">Compared MLR, LASSO, and Decision Tree models on 52K+ energy records. LASSO won (RMSE 6,305 MW · R² 0.206); temperature emerged as the strongest predictor of load.</p>
+      <div class="pc-stats">
+        <div class="pcs-item"><span class="pcs-val">52K</span><span class="pcs-label">RECORDS</span></div>
+        <div class="pcs-item"><span class="pcs-val">6,305</span><span class="pcs-label">RMSE MW</span></div>
+        <div class="pcs-item"><span class="pcs-val">0.206</span><span class="pcs-label">R²</span></div>
+      </div>
+      <div class="pc-tags"><span class="pc-tag">R</span><span class="pc-tag">glmnet</span><span class="pc-tag">tidyverse</span><span class="pc-tag">ggplot2</span></div>
+      <div class="pc-links"><a href="https://github.com/MahiPatel23" target="_blank" class="pc-link">GitHub ↗</a></div>
+    </div>
+    <div class="proj-card small reveal">
+      <div class="pc-top"><span class="pc-num">P-01</span><span class="pc-date">Spring 2026</span></div>
+      <h3 class="pc-title">Chicago Crime Mining</h3>
+      <p class="pc-subtitle">CS 418 — Data Mining · UIC</p>
+      <canvas class="mini-chart-sm" id="chart-crime"></canvas>
+      <p class="pc-desc">Mined 1M+ incidents from 2020–2024 to surface the five highest-crime neighborhoods and peak hours, packaged as an interactive geospatial dashboard with neighborhood-level filters.</p>
+      <div class="pc-stats">
+        <div class="pcs-item"><span class="pcs-val">1M+</span><span class="pcs-label">ROWS</span></div>
+        <div class="pcs-item"><span class="pcs-val">5yr</span><span class="pcs-label">WINDOW</span></div>
+        <div class="pcs-item"><span class="pcs-val">24h</span><span class="pcs-label">CYCLE</span></div>
+      </div>
+      <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">Pandas</span><span class="pc-tag">Matplotlib</span><span class="pc-tag">Seaborn</span></div>
+      <div class="pc-links"><a href="https://github.com/MahiPatel23" target="_blank" class="pc-link">GitHub ↗</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section reveal" id="about">
+  <p class="sec-eyebrow">§ 02 — ABOUT</p>
+  <div class="about-grid">
+    <div>
+      <h2 class="about-h2">I like questions that<br/><span class="mint">don't</span> have a tidy<br/>answer.</h2>
+      <p class="about-copy">Most of my work starts with a million-row CSV and a question someone gave up on. At UIC I'm studying data mining, causal inference, and statistical modeling — the rest of the time I'm building the dashboards I wish existed.</p>
+      <p class="about-copy">Lately: healthcare and civic data — emergency response equity, ICU early-warning systems, energy load forecasting. Anything where the analysis has to survive contact with a real decision.</p>
+    </div>
+    <div class="about-right">
+      <div class="info-card">
+        <div class="ic-header">
+          <span class="ic-label">// EXPERIENCE</span>
+          <span class="ic-date">Feb – Sep 2025</span>
+        </div>
+        <p class="ic-title">General Office Aide</p>
+        <p class="ic-org">UIC Tutorium · Intl. Recruitment</p>
+        <div class="ic-bullet"><span class="ic-arr">▸</span><span>Ranked 50+ country markets from recruitment data; outreach strategy adopted by dept. leadership.</span></div>
+        <div class="ic-bullet"><span class="ic-arr">▸</span><span>Built a 500+ international high-school database, cutting targeting prep time.</span></div>
+        <div class="ic-bullet"><span class="ic-arr">▸</span><span>Ran email campaigns to 500+ institutions for UIC's Intensive English Program.</span></div>
+      </div>
+      <div class="info-card">
+        <div class="ic-header">
+          <span class="ic-label">// EDUCATION</span>
+          <span class="ic-date">2024 – 2026</span>
+        </div>
+        <p class="ic-title">University of Illinois — Chicago</p>
+        <p class="ic-deg">B.S. Data Science w/ Business Analytics · <span class="ic-gpa">GPA 3.46 / 4.0</span></p>
+        <div class="ic-pills">
+          <span class="ic-pill">Data Mining</span><span class="ic-pill">Causal Inference</span>
+          <span class="ic-pill">Statistical Modeling</span><span class="ic-pill">Machine Learning</span>
+          <span class="ic-pill">Predictive Analytics</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-header">
+          <span class="ic-label">// EDUCATION</span>
+          <span class="ic-date">2023 – 2024</span>
+        </div>
+        <p class="ic-title">William Rainey Harper College</p>
+        <p class="ic-deg">Computer Science — Transfer · <span class="ic-gpa">GPA 3.73 / 4.0</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="section reveal" id="stack">
+  <p class="sec-eyebrow">§ 03 — TOOLKIT</p>
+  <h2 class="sec-h2">The stack I <span class="mint">reach</span> <span class="purple">for</span>.</h2>
+  <div class="stack-grid">
+    <div class="sk-card">
+      <div class="sk-head"><span class="sk-title">LANGUAGES</span><span class="sk-count">04</span></div>
+      <ul class="sk-list">
+        <li class="sk-item"><span class="sk-chevron">›</span>Python</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>R</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>SQL</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>SAS</li>
+      </ul>
+    </div>
+    <div class="sk-card">
+      <div class="sk-head"><span class="sk-title">LIBRARIES</span><span class="sk-count">10</span></div>
+      <ul class="sk-list">
+        <li class="sk-item"><span class="sk-chevron">›</span>Pandas</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>NumPy</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Scikit-learn</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Plotly</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Matplotlib</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Seaborn</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Folium</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>ggplot2</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>glmnet</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>tidyverse</li>
+      </ul>
+    </div>
+    <div class="sk-card">
+      <div class="sk-head"><span class="sk-title">TOOLS</span><span class="sk-count">06</span></div>
+      <ul class="sk-list">
+        <li class="sk-item"><span class="sk-chevron">›</span>GitHub</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Streamlit</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Jupyter</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>RStudio</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>VS Code</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Excel</li>
+      </ul>
+    </div>
+    <div class="sk-card">
+      <div class="sk-head"><span class="sk-title">TECHNIQUES</span><span class="sk-count">05</span></div>
+      <ul class="sk-list">
+        <li class="sk-item"><span class="sk-chevron">›</span>Predictive Modeling</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>EDA</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Geospatial</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Panel Data</li>
+        <li class="sk-item"><span class="sk-chevron">›</span>Causal Inference</li>
+      </ul>
+    </div>
+  </div>
+  <div class="cert-card">
+    <div class="cert-header">
+      <span class="cert-label">// CERTIFICATIONS</span>
+      <span class="cert-count">5 earned</span>
+    </div>
+    <div class="cert-pills">
+      <span class="cert-pill">AWS Cloud Foundations</span>
+      <span class="cert-pill">Azure: Trustworthy AI</span>
+      <span class="cert-pill">IBM Data Fundamentals</span>
+      <span class="cert-pill">IBM Cybersecurity</span>
+      <span class="cert-pill">CITI: Human Research</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section reveal" id="contact">
+  <p class="sec-eyebrow">§ 04 — CONTACT</p>
+  <div class="contact-grid">
+    <div>
+      <h2 class="contact-h2">Have a dataset that<br/>deserves <span class="mint">better</span><br/>answers?<span class="cur"></span></h2>
+      <p class="contact-sub">Open to internships, full-time positions, research collaborations, and freelance analytics work. Based in Schaumburg / Chicago, IL. Open to relocation.</p>
+      <div class="contact-links">
+        <a href="mailto:mahipatel1623@gmail.com" class="c-link">
+          <div class="cl-left"><span class="cl-label">email</span><span class="cl-val">mahipatel1623@gmail.com</span></div>
+          <span class="cl-arr">→</span>
+        </a>
+        <a href="tel:+12244863442" class="c-link">
+          <div class="cl-left"><span class="cl-label">phone</span><span class="cl-val">(224) 486-3442</span></div>
+          <span class="cl-arr">→</span>
+        </a>
+        <a href="https://github.com/MahiPatel23" target="_blank" class="c-link">
+          <div class="cl-left"><span class="cl-label">github</span><span class="cl-val">MahiPatel23</span></div>
+          <span class="cl-arr">↗</span>
+        </a>
+        <a href="https://www.linkedin.com/in/mahi-patel-5750492a0/" target="_blank" class="c-link">
+          <div class="cl-left"><span class="cl-label">linkedin</span><span class="cl-val">mahi-patel-5750492a0</span></div>
+          <span class="cl-arr">↗</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-info">
+      <div class="ci-card">
+        <p class="ci-label">location</p>
+        <p class="ci-val">Schaumburg / Chicago, IL<br/>Open to remote, hybrid & relocation</p>
+      </div>
+      <div class="ci-card">
+        <p class="ci-label">availability</p>
+        <p class="ci-val">Actively seeking internship, full-time, and freelance opportunities in data analytics, data science, and business analysis. Open to remote, hybrid, and on-site roles.</p>
+      </div>
+      <div class="ci-card">
+        <p class="ci-label">live projects</p>
+        <a href="https://sepsis-watch.streamlit.app" target="_blank" class="ci-link">SepsisWatch ↗</a>
+        <a href="https://chicago911-tracker.streamlit.app/" target="_blank" class="ci-link" style="color:var(--purple);">Chicago 911 Tracker ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Mahi Patel · built with curiosity & caffeine</span>
+  <div class="ft-status"><span class="mc-dot"></span>status: shipping</div>
+</footer>
+
+<script>
+// CLOCK
+function tick(){const n=new Date();document.getElementById('clock').textContent=[n.getHours(),n.getMinutes(),n.getSeconds()].map(v=>String(v).padStart(2,'0')).join(':')+' · CHI';}
+setInterval(tick,1000);tick();
+
+// TICKER
+const words=['PLOTLY','FOLIUM','R','TIDYVERSE','SQL','SAS','PANDAS','NUMPY','ML','GEOSPATIAL','CAUSAL','PYTHON','SCIKIT-LEARN','STREAMLIT'];
+const ti=document.getElementById('ticker');
+[...words,...words].forEach(w=>{
+  const s=document.createElement('span');s.className='tick-item';
+  s.innerHTML=w+'<span class="tick-sep">✦</span>';ti.appendChild(s);
+});
+
+// REVEAL
+const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on');}),{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// HELPERS
+function rnd(a,b){return a+Math.random()*(b-a);}
+function drawLineChart(canvas,color,filled,points){
+  const dpr=window.devicePixelRatio||1;
+  const W=canvas.offsetWidth,H=canvas.offsetHeight;
+  if(!W||!H)return;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  const pad=8;
+  const xs=points.map((_,i)=>pad+i*(W-2*pad)/(points.length-1));
+  const min=Math.min(...points)*0.95,max=Math.max(...points)*1.05;
+  const ys=points.map(v=>H-pad-(v-min)/(max-min)*(H-2*pad));
+  if(filled){
+    const grad=ctx.createLinearGradient(0,0,0,H);
+    grad.addColorStop(0,color+'44');grad.addColorStop(1,color+'00');
+    ctx.beginPath();ctx.moveTo(xs[0],ys[0]);
+    xs.forEach((x,i)=>{if(i>0){const px=xs[i-1],py=ys[i-1];ctx.bezierCurveTo(px+(x-px)/2,py,px+(x-px)/2,ys[i],x,ys[i]);}});
+    ctx.lineTo(xs[xs.length-1],H);ctx.lineTo(xs[0],H);ctx.closePath();
+    ctx.fillStyle=grad;ctx.fill();
+  }
+  ctx.beginPath();ctx.moveTo(xs[0],ys[0]);
+  xs.forEach((x,i)=>{if(i>0){const px=xs[i-1],py=ys[i-1];ctx.bezierCurveTo(px+(x-px)/2,py,px+(x-px)/2,ys[i],x,ys[i]);}});
+  ctx.strokeStyle=color;ctx.lineWidth=2;ctx.shadowColor=color;ctx.shadowBlur=8;ctx.stroke();ctx.shadowBlur=0;
+}
+
+function drawBarChart(canvas,color,highlightIdx){
+  const dpr=window.devicePixelRatio||1;
+  const W=canvas.offsetWidth,H=canvas.offsetHeight;
+  if(!W||!H)return;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  const n=10,gap=4,pad=4;
+  const bw=(W-2*pad-(n-1)*gap)/n;
+  const vals=Array.from({length:n},()=>rnd(0.3,0.9));
+  vals[highlightIdx]=0.95;
+  vals.forEach((v,i)=>{
+    const x=pad+i*(bw+gap),barH=v*(H-pad*2),y=H-pad-barH;
+    ctx.fillStyle=i===highlightIdx?color:'#2e3352';
+    if(i===highlightIdx){ctx.shadowColor=color;ctx.shadowBlur=10;}
+    ctx.beginPath();ctx.roundRect(x,y,bw,barH,2);ctx.fill();
+    ctx.shadowBlur=0;
+  });
+}
+
+// Draw charts after layout
+setTimeout(()=>{
+  // Model perf line
+  const mc=document.getElementById('mc-chart');
+  if(mc&&mc.offsetWidth){
+    const pts=[0.72,0.74,0.76,0.75,0.78,0.80,0.82,0.84,0.86,0.87,0.89,0.91];
+    drawLineChart(mc,'#4fffb0',true,pts);
+  }
+  // SepsisWatch bar
+  const sc=document.getElementById('chart-sepsis');
+  if(sc&&sc.offsetWidth)drawBarChart(sc,'#4fffb0',5);
+  // 911 line
+  const c911=document.getElementById('chart-911');
+  if(c911&&c911.offsetWidth){
+    const pts=[0.5,0.55,0.52,0.6,0.58,0.65,0.7,0.68,0.75,0.8,0.82,0.88];
+    drawLineChart(c911,'#a78bfa',true,pts);
+  }
+  // Power bar
+  const cp=document.getElementById('chart-power');
+  if(cp&&cp.offsetWidth)drawBarChart(cp,'#4fffb0',3);
+  // Crime line
+  const cc=document.getElementById('chart-crime');
+  if(cc&&cc.offsetWidth){
+    const pts=[0.4,0.45,0.5,0.48,0.55,0.6,0.65,0.7,0.75,0.78,0.82,0.85];
+    drawLineChart(cc,'#a78bfa',true,pts);
+  }
+},300);
+
+// GLOBE
+function drawGlobe(){
+  const canvas=document.getElementById('globe-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const cx=45,cy=45,r=38;
+  ctx.clearRect(0,0,90,90);
+  // glow
+  const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+  grad.addColorStop(0,'rgba(79,255,176,0.15)');
+  grad.addColorStop(0.7,'rgba(79,255,176,0.05)');
+  grad.addColorStop(1,'rgba(79,255,176,0)');
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();
+  // border
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle='rgba(79,255,176,0.4)';ctx.lineWidth=1;ctx.stroke();
+  // latitude lines
+  [-3,-2,-1,0,1,2,3].forEach(n=>{
+    const ry=n*(r/3.5);if(Math.abs(ry)>r)return;
+    const rx=Math.sqrt(r*r-ry*ry);
+    ctx.beginPath();ctx.ellipse(cx,cy+ry,rx,rx*0.3,0,0,Math.PI*2);
+    ctx.strokeStyle='rgba(79,255,176,0.15)';ctx.lineWidth=0.5;ctx.stroke();
+  });
+  // longitude lines
+  [0,1,2].forEach(n=>{
+    ctx.beginPath();ctx.ellipse(cx,cy,r*0.35+n*r*0.15,r,n*Math.PI/3,0,Math.PI*2);
+    ctx.strokeStyle='rgba(79,255,176,0.12)';ctx.lineWidth=0.5;ctx.stroke();
+  });
+  // dot for Chicago
+  ctx.beginPath();ctx.arc(cx-4,cy-8,3,0,Math.PI*2);
+  ctx.fillStyle='#4fffb0';ctx.shadowColor='#4fffb0';ctx.shadowBlur=8;ctx.fill();ctx.shadowBlur=0;
+}
+drawGlobe();
+
+// COUNT UP
+function countUp(el,target,dur,fmt){
+  let s=null;
+  function step(ts){if(!s)s=ts;const p=Math.min((ts-s)/dur,1),e=1-Math.pow(1-p,3);el.textContent=fmt(Math.floor(e*target));if(p<1)requestAnimationFrame(step);}
+  requestAnimationFrame(step);
+}
+const sObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    countUp(document.getElementById('cnt1'),36111,1600,v=>v.toLocaleString());
+    setTimeout(()=>{let v=0;const el=document.getElementById('cnt2');const iv=setInterval(()=>{v++;el.textContent='$'+v+'M';if(v>=32)clearInterval(iv);},50);},200);
+    setTimeout(()=>{let v=0;const el=document.getElementById('cnt3');const iv=setInterval(()=>{v+=2;el.textContent=v+'%';if(v>=54)clearInterval(iv);},35);},400);
+    sObs.disconnect();
+  }
+},{threshold:0.3});
+const sw=document.getElementById('cnt1');if(sw)sObs.observe(sw.closest('.proj-card'));
+</script>
+</body>
+</html>
